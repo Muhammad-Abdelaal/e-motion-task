@@ -8,7 +8,7 @@
                 <p>{{props.cartItem.name}}</p>
                 <p style="color:#007058; font-weight:500;">{{props.cartItem.hasWeight ? `${props.cartItem.price} / ${props.cartItem.weight} ${props.cartItem.weight === 1 ? 'kilo' :'gm'}`   
                     :`${props.cartItem.price} EGP / Item`}}</p>
-                <p style="color:#007058; font-weight:500;">{{`total price: ${props.cartItem.totalPrice} EGP`}}</p>
+                <p style="color:#007058; font-weight:500;">{{`total price: ${formattedItemTotalPrice} EGP`}}</p>
 
                 <ProductCounter :removeItemFromCart="removeItemFromCart" :addItemToCart="addItemToCart" :productCount="props.cartItem.amount" />
             </div>
@@ -18,11 +18,17 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 import store from '@/store/store.js';
 
 import ProductCounter from '@/components/UI/ProductCounter.vue';
 
 const props = defineProps({cartItem:Object});
+
+const formattedItemTotalPrice = computed(() => {
+    return parseFloat(props.cartItem.totalPrice).toFixed(2)
+})
 
 function addItemToCart () {
     store.cart.addToCart(

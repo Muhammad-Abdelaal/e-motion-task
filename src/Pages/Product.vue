@@ -8,6 +8,6 @@
     import ProductDetails from '@/components/views components/product/ProductDetails.vue'
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
 
 </style>

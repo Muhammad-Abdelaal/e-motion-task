@@ -14,9 +14,9 @@ const products = store.data;
 </script>
 
 <style scoped>
-    #shop-products-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
+#shop-products-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 </style>

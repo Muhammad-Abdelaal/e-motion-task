@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted} from 'vue';
+import {ref,computed, watch, onMounted} from 'vue';
 import {useRoute} from 'vue-router';
 
 import store from '@/store/store.js';
@@ -42,6 +42,22 @@ const currentAmount = ref(1);
 const currentWeight = ref(250);
 const itemCounter = ref(0);
 
+watch(store.cart, (newVal, oldVal) => {
+    if (newVal.items.length !== 0 ) {
+        let localCounter = 0 ;
+        const existingItems = newVal.items.filter(item => {
+            return item.id === currentProduct.id
+        })
+        
+        existingItems.forEach(item => {
+            localCounter += item.amount
+        })
+        itemCounter.value = localCounter;
+    }
+    else {
+        itemCounter.value = 0;
+    }
+})
 onMounted(() => {
     if (store.cart.items.length !== 0 ) {
         let localCounter = 0 ;

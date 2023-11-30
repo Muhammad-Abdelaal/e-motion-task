@@ -21,9 +21,9 @@ function cartHandler (value) {isCartOpen.value = value}
 </script>
 
 <style scoped>
-    #main {
-        margin: auto;
-        margin-top: 100px;
-        max-width: 1280px;
-    }
+#main {
+    margin: auto;
+    margin-top: 100px;
+    max-width: 1280px;
+}
 </style>
