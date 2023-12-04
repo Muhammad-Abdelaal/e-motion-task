@@ -1,6 +1,6 @@
 <template>
     <div id="navbar">
-        <RouterLink to='/'><h2>E-motion Task</h2></RouterLink>
+        <RouterLink to='/'><h2 id="logo">E-motion Task</h2></RouterLink>
         <div class="cart-icon-container" @click="() => {props.cartHandler(true)}"><img height="30" width="30" :src="cartImage" /> <span v-if="itemCounter !== 0" class="current-count">{{itemCounter}}</span></div>
     </div>
 </template>
@@ -52,5 +52,13 @@ watch(store.cart, (newVal, oldVal) => {
     background-color: #e8f900;
     display: grid;
     place-content: center;
+}
+@media (max-width:768px) {
+    #navbar {
+        padding: 10px 20px;
+    }
+    #logo {
+        font-size: 18px ;
+    }
 }
 </style>

@@ -32,7 +32,7 @@ const functions = {
         if (existingType) {
             if (newItem.hasWeight) {
                 const itemThatHasSameWeightIndex = this.items.findIndex(item => {
-                    return item.weight === newItem.weight
+                    return item.weight == newItem.weight
                 })
                 const itemThatHasSameWeight = this.items[itemThatHasSameWeightIndex]
                 if(itemThatHasSameWeight) {

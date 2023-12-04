@@ -6,14 +6,14 @@
             </div>
             <div class="cart-product-details">
                 <p>{{props.cartItem.name}}</p>
-                <p style="color:#007058; font-weight:500;">{{props.cartItem.hasWeight ? `${props.cartItem.price} / ${props.cartItem.weight} ${props.cartItem.weight === 1 ? 'kilo' :'gm'}`   
+                <p style="color:#007058; font-weight:500;">{{props.cartItem.hasWeight ? `${props.cartItem.price} / ${props.cartItem.weight} ${props.cartItem.weight == 1 ? 'kilo' :'gm'}`   
                     :`${props.cartItem.price} EGP / Item`}}</p>
                 <p style="color:#007058; font-weight:500;">{{`total price: ${formattedItemTotalPrice} EGP`}}</p>
 
                 <ProductCounter :removeItemFromCart="removeItemFromCart" :addItemToCart="addItemToCart" :productCount="props.cartItem.amount" />
             </div>
         </div>
-        <p @click="() => {removeItemFromCart('remove')}" style="margin-top:auto; margin-bottom:0; color:red; cursor:pointer;">Remove</p>
+        <p @click="() => {removeItemFromCart('remove')}" style="margin:auto;margin-top:auto; margin-bottom:0; color:red; cursor:pointer; width:max-content">Remove</p>
     </div>
 </template>
 
@@ -61,5 +61,11 @@ function removeItemFromCart (action) {
 }
 .cart-product-details > * {
     margin-bottom: 10px;
+}
+@media (max-width:768px) {
+    .cart-product {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
 </style>

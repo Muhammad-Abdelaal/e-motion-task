@@ -24,6 +24,7 @@ function cartHandler (value) {isCartOpen.value = value}
 #main {
     margin: auto;
     margin-top: 100px;
+    width: 90%;
     max-width: 1280px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="product">
         <RouterLink :to="{ name: 'Product', params: { productId: props.product.id }}" class="shop-product">
             <img class="product-img" :src="props.product.imgLink" />
             <p class="product-name">{{props.product.name}}</p>
@@ -78,5 +78,11 @@ function addItemToCart () {
     color:#007058;
     font-weight: 600;
     margin-bottom: 10px;
+}
+@media (max-width:768px) {
+    .product {
+        margin: auto;
+        text-align: center;
+    }
 }
 </style>

@@ -48,4 +48,9 @@
     display: grid;
     place-content: center;
 }
+@media (max-width:768px) {
+    .product-add-to-cart {
+        padding: 7px 20px;
+    }
+}
 </style>

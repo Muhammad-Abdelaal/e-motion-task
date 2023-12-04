@@ -18,5 +18,6 @@ const products = store.data;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    padding: 20px 0;
 }
 </style>

@@ -2,6 +2,7 @@
     <div :style="props.isCartOpen ? 'display:block;' : 'display:none;'" class="cart-modal-container">
         <div @click="() => {props.cartHandler(false)}" class="modal" />
         <div :style="props.isCartOpen ? 'right:0;' : 'right:-400px;'" class="cart">
+            <p @click="() => {props.cartHandler(false)}" class="cart-close-btn">x</p>
             <p class="cart-title">cart</p>
             <CartProductsList />
             <div class="total-cart-price-container">
@@ -39,10 +40,18 @@ const props = defineProps({cartHandler:Function, isCartOpen:Boolean});
 .cart {
     padding: 20px;
     background-color: white;
-    height: 100vh;
+    min-height: 100vh;
+    height: max-content;
     width: 550px;
     position: absolute;
     z-index: 2;
+}
+.cart-close-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 26px;
 }
 .cart-title {
     font-size: 24px;
@@ -67,5 +76,10 @@ const props = defineProps({cartHandler:Function, isCartOpen:Boolean});
     padding: 15px 30px;
     border-radius: 25px;
     width: 100%;
+}
+@media (max-width:768px) {
+    .cart {
+        width: 100vw;
+    }
 }
 </style>

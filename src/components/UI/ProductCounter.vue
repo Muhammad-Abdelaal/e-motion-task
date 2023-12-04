@@ -27,4 +27,10 @@ const props = defineProps({productCount:Number, removeItemFromCart:Function, add
     height: 40px;
     font-weight: 500;
 }
+
+@media (max-width:768px) {
+    .counter-btn {
+        height: 30px;
+    }
+}
 </style>

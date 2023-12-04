@@ -1,6 +1,6 @@
 <template>
     <div class="product-details-container">
-        <div style="width:460px ; height:400px;">
+        <div class="product-details-image-container">
             <img class="product-image" :src="currentProduct.imgLink" />
         </div>
         <div class="product-details">
@@ -9,7 +9,7 @@
             <div style="margin-bottom:40px;" v-if="currentProduct.hasWeight">
                 <label style="display:block; font-weight:600; font-size:22px; margin-bottom:10px;" for="weights">Grocery weight</label>
 
-                <select v-model="currentWeight" id="weights-selector">
+                <select @change="weightChangeHandler" v-model="currentWeight" id="weights-selector">
                     <option value="250">250 gm</option>
                     <option value="500">500 gm</option>
                     <option value="750">750 gm</option>
@@ -42,17 +42,39 @@ const currentAmount = ref(1);
 const currentWeight = ref(250);
 const itemCounter = ref(0);
 
+function weightChangeHandler () {
+    if (store.cart.items.length !== 0 ) {
+        if (currentProduct.hasWeight) {
+            const item = store.cart.items.find(item => {
+                return currentWeight.value == item.weight
+            });
+            itemCounter.value =  item ? item.amount : 0
+        }
+        else {
+            const existingItem = store.cart.items.find(item => {
+                return item.id === currentProduct.id
+            })
+            itemCounter.value =  existingItem ? existingItem.amount : 0
+        }
+    }
+    currentAmount.value = 1
+}
+
 watch(store.cart, (newVal, oldVal) => {
     if (newVal.items.length !== 0 ) {
-        let localCounter = 0 ;
-        const existingItems = newVal.items.filter(item => {
-            return item.id === currentProduct.id
-        })
+        if (currentProduct.hasWeight) {
+            const item = newVal.items.find(item => {
+                return currentWeight.value == item.weight
+            });
+            itemCounter.value =  item ? item.amount : 0
+        }
+        else {
+            const existingItem = newVal.items.find(item => {
+                return item.id === currentProduct.id
+            })
         
-        existingItems.forEach(item => {
-            localCounter += item.amount
-        })
-        itemCounter.value = localCounter;
+            itemCounter.value =  existingItem ? existingItem.amount : 0
+        }
     }
     else {
         itemCounter.value = 0;
@@ -60,15 +82,18 @@ watch(store.cart, (newVal, oldVal) => {
 })
 onMounted(() => {
     if (store.cart.items.length !== 0 ) {
-        let localCounter = 0 ;
-        const existingItems = store.cart.items.filter(item => {
-            return item.id === currentProduct.id
-        })
-
-        existingItems.forEach(item => {
-            localCounter += item.amount
-        })
-        itemCounter.value = localCounter;
+        if (currentProduct.hasWeight) {
+            const item = store.cart.items.find(item => {
+                return currentWeight.value == item.weight
+            });
+            itemCounter.value =  item ? item.amount : 0
+        }
+        else {
+            const existingItem = store.cart.items.find(item => {
+                return item.id === currentProduct.id
+            })
+            itemCounter.value =  existingItem ? existingItem.amount : 0
+        }
     }
 })
 
@@ -93,15 +118,16 @@ function addItemToCart () {
     store.cart.addToCart(
         {name:currentProduct.name, id:currentProduct.id, amount:currentAmount.value, weight:currentProduct.hasWeight ? currentWeight.value :null, hasWeight:currentProduct.hasWeight, totalPrice:currentTotalPrice.value,  price:currentPrice.value, imgLink:currentProduct.imgLink}
     )
-    let localCounter = 0 ;
-    const existingItems = store.cart.items.filter(item => {
-        return item.id === currentProduct.id
-    })
+    // let localCounter = 0 ;
+    // const existingItems = store.cart.items.filter(item => {
+    //     return item.id === currentProduct.id
+    // })
 
-    existingItems.forEach(item => {
-        localCounter += item.amount
-    })
-    itemCounter.value = localCounter;
+    // existingItems.forEach(item => {
+    //     localCounter += item.amount
+    // })
+    // itemCounter.value = localCounter;
+    currentAmount.value = 1;
 } 
 
 </script>
@@ -113,6 +139,10 @@ function addItemToCart () {
     gap: 40px;
     width: max-content;
     margin: auto;
+}
+.product-details-image-container {
+    width:460px;
+    height:400px;
 }
 .product-image {
     object-fit: contain;
@@ -135,5 +165,19 @@ function addItemToCart () {
     background-color: white;
     padding: 15px;
     border: 1px solid black;
+}
+@media (max-width:768px) {
+    .product-details-container {
+        display: unset;
+        text-align: center;
+    }
+    .product-details-image-container {
+        width:150px;
+        height:130px;
+        margin: auto;
+    }
+    .product-details-name {
+        font-size:26px;
+    }
 }
 </style>
